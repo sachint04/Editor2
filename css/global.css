@@ -1,0 +1,43 @@
+.hide{
+	display:none !important;
+}
+
+
+.stage-editor {
+    position: absolute;
+    left: 0;
+    top: -22px;
+}
+#panels{
+    z-index: 100;
+    position:absolute;
+	
+}
+.css-panel {
+    width: 210px;
+    border: 1px dashed rgb(10,10,0);
+    background-color: rgba(250,250,250,1);
+    padding: 5px;
+    height: 400px;
+    overflow-y: auto;
+    left:10px;
+    top:10px;
+    position: absolute;
+    z-index: 100;
+}
+.css-panel .style {
+    border-bottom: 1px dashed rgb(10,10,0);
+    padding: 5px;
+}
+.css-panel label {
+    width: 140px;
+    color: blue;
+    font-size: 0.7em;
+    float: left;
+}
+.css-panel input {
+    width: 180px;
+    /* float: right; */
+    height: 1em;
+    font-size: 0.8em;
+}
