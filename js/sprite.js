@@ -33,7 +33,7 @@ define([
 			var oScope = this;
 			this.$view.click(function(e){
 				e.preventDefault();
-				oScope.dispatchEvent('sprite_click',{type:'sprite_right_click', target:this, view:oScope.$view});
+				oScope.dispatchEvent('sprite_left_click',{type:'sprite_left_click', target:this, view:oScope.$view});
 			});
 			//addContextMenu.call(this);
 			this.init 	= this.init.bind(this);

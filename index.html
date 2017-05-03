@@ -47,13 +47,16 @@
 		</div>
 		<canvas id="grid" width="1000" height="500"></canvas>
 		<div class="anim-style"></div>
+		<div id="resize-handle" data-right="true" data-bottom="true"></div>
 		<div id="panels">
 		</div>
 		<div class="css-panel">
 			<h4>CSS property</h4>
 			<div id="cssprop"> 
+				<label id="lbl_search" for="search">Search</label>
+				<input type="text" name="search" ng-model="curstyle" id="search"/>
 				<div ng-controller="cssObj">
-					<div ng-repeat="x in model" >
+					<div ng-repeat="x in model.css | filter:curstyle" >
 							<label ng-bind="x.label"></label>
 							<input type="text" ng-change="onChange(x.label, x.value)" ng-model="x.value"></input>
 					</div>

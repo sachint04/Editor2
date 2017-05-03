@@ -29,15 +29,37 @@
     border-bottom: 1px dashed rgb(10,10,0);
     padding: 5px;
 }
+.css-panel h4 {
+    height: 30px;
+    padding: 0;
+    margin: 0;
+    background: gray;
+    color: #fff;
+    vertical-align: middle;
+    display: table-cell;
+    width: 183px;
+    text-align: center;
+}
 .css-panel label {
-    width: 140px;
-    color: blue;
+        color: blue;
     font-size: 0.7em;
     float: left;
+    margin-top: 10px;
+    border-top: 1px dashed gray;
+    width: 100%;
+    display: inline-block;
+}
+.css-panel label#lbl_search{
+	    color: #000;
+    font-size: 0.9em;
 }
 .css-panel input {
     width: 180px;
-    /* float: right; */
     height: 1em;
-    font-size: 0.8em;
+    font-size: 0.72em;
+    height: 14px;
+}
+.css-panel input#search {
+    height: 18px;
+    border: 2px solid gray;
 }

@@ -9,10 +9,12 @@ define([
 		
 		var csspanel = function(p_$elem){
 			EventDispatcher.call(this);
-			
+			this.app;
 			this.$view 		= p_$elem;
-			
-			this.interactable = interact(this.$view[0])  
+			this.model 	= 	[];
+			this.base	=	[];
+			this.view;
+			this.interactable = interact(this.$view.find("h4")[0])  
 			  .draggable({
 			  	restrict:'body',
 			    // enable inertial throwing
@@ -26,7 +28,9 @@ define([
 				    autoScroll: true
 				}
 			);
-			this.createModel = this.createModel.bind(this);
+			this.createModel 	= this.createModel.bind(this);
+			this.setModel 		= this.setModel.bind(this);
+			this.getModel 		= this.getModel.bind(this);
 			return this;
 			
 		};
@@ -46,27 +50,51 @@ define([
 			    // target.style.transform =
 			    // 'translate(' + x + 'px, ' + y + 'px)';
 			
-			target.style.left = x+'px';
-			target.style.top = y+'px';
+			$(target).parent()[0].style.left = x+'px';
+			$(target).parent()[0].style.top = y+'px';
 				
 		    // update the posiion attributes
 		    target.setAttribute('data-x', x);
 		    target.setAttribute('data-y', y);
 	 }
 			  
+	 csspanel.prototype.getModel		= function(){
+	 	return this.model["css"];
+	 };
+	 
+	 csspanel.prototype.setModel		= function(oJson, view){
+	 	var oScope 	= this;
+	 	var freshArr		=	 angular.copy(this.base);
+	 	this.model["css"] = oJson || freshArr;
+	 	this.view = view;
+	 	if(oJson){
+		 	console.log(oJson[0].value+ " | " + oJson[0].value);	 		
+	 	}
+	 	
+	 	
+ 		 var $scope = angular.element(this.elem).scope();
+ 		// var $cntrl 	= angular.element(this.elem).controller("cssObj");
+	 	 $scope.$apply(function(){
+//	 		 $scope.controller('cssObj').updateModel(oJson || oScope.base);
+		 $('input#search').val("").trigger("change");
+		// $scope.search = angular.copy($scope.default);
+	 	 });
+	
+	 };
 	 csspanel.prototype.createModel		= function(oJson, elem){
-	 	angular.module('csspanel', [])
+	 	var oScope = this;
+	 	this.base =  angular.copy(oJson);
+	 	this.elem = elem;
+	 	this.app = angular.module('csspanel', [])
 	 	.controller('cssObj', ['$scope', function($scope){
-	 		$scope.model = 	oJson;
-	 		
+	 		$scope.model = 	oScope.model;
 	 		$scope.onChange 	= function(label , value){
-	 			$("#sprite1").css(label, value);
+	 			oScope.view.css(label, value);
 	 		};
+	 		
 	 	}]);
 	 	
-	 //	angular.element(function() {
  			angular.bootstrap(elem, ['csspanel']);
- 		//});
 	 };
 				
 		return csspanel;

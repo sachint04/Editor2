@@ -13,7 +13,7 @@ define([
 	function($, EventDispatcher,Sprite, responsiveGrid, stage, csspanel){
 	var 	time 			= 10,
 			fps				= 20, 
-			currentframe 	= 1, playInterval, aSprites, currentSprite, $playhead,$frame, $view,oEffect,$stage;
+			currentframe 	= 1, playInterval, aSprites, oCSS={}, currentSprite, $playhead,$frame, $view,oEffect,$stage;
 
 		/**
 		 * 
@@ -80,7 +80,7 @@ define([
 		//moveBar.addEventListener('drag_progress', dragProgress.bind(this));
 		
 		this.grid = new responsiveGrid($('#grid')[0], {
-			col: 96,
+			col: 48,
 			stage:$('#stage')
 		});
 		this.grid.draw();
@@ -107,14 +107,16 @@ define([
 	};
 	
 	function addSprite(target, options){
-		var $elem 	= $('<div class="sprite" id="sprite'+this.aSprites.length+'"></div>');
+		var $elem 	= $('<div class="sprite" id="sprite'+(this.aSprites.length+1)+'"></div>');
 		var offset = options.left % this.grid.offset;
 		options.left = options.left - offset; 
 		var sprite 	= new Sprite($elem, this.$stage, {x:this.grid.offset, y:'Infinity' });
 		$elem.css({"left":options.left+"px", "top":options.top+"px"}).attr({"data-x": options.left, "data-y": options.top});
 		target.append($elem);
+		sprite.addEventListener('sprite_right_click', onSpriteClick.bind(this));
+		sprite.addEventListener('sprite_left_click', onSpriteClick.bind(this));
 		sprite.init();
-		this.aSprites.push($elem);
+		this.aSprites.push(sprite);
 		
 	}
 	
@@ -227,7 +229,7 @@ define([
 	
 	/**
 	 * Event handler 
- * @param {Object} e Event
+ 	* @param {Object} e Event
 	 */
 	timeline.prototype.handleEvent = function(e){
 		var oScope = this,
@@ -375,7 +377,16 @@ define([
 				onSpriteRightClick.call(this, e);
 			break;
 		}
-		this.currentSprite = getCurrentSpriteByView.call(this, e.target);			
+		var oSprite = getCurrentSpriteByView.call(this, e.target);
+		
+		if(this.currentSprite != oSprite){
+			if(this.currentSprite){
+				setCSSModel.call(this, this.currentSprite.$view.attr("id"), this.csspanel.getModel());				
+			}
+			this.currentSprite = getCurrentSpriteByView.call(this, e.target);			
+			this.csspanel.setModel(getCSSModel.call(this, this.currentSprite.$view.attr("id")), this.currentSprite.$view);
+		};
+		
 		var offset = e.view.offset();
 	};
 
@@ -416,8 +427,24 @@ define([
 		
 	};
 	
+	function getCSSModel(p_Id){
+		if(oCSS[p_Id]){
+			return oCSS[p_Id].css.slice(0);		
+		}
+		return null;
+	};
+	
+	function setCSSModel(p_Id, oData){
+		if(oCSS[p_Id]){
+			oCSS[p_Id].css = oData;		
+		}else{
+			oCSS[p_Id] = {css: oData};
+		}
+		return null;
+	};
+	
 	function onSpriteRightClick(e){
-		
+		this.csspanel.createModel(oJson, $('#cssprop ')[0]);
 		
 	};
 
