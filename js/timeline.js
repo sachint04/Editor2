@@ -77,10 +77,11 @@ define([
 			var sEffect = $(e.currectTarget).attr('id'); 
 			oScope.addEffect.call(this, sEffect);
 		});
+		
 		//moveBar.addEventListener('drag_progress', dragProgress.bind(this));
 		
 		this.grid = new responsiveGrid($('#grid')[0], {
-			col: 48,
+			col: 12,
 			stage:$('#stage')
 		});
 		this.grid.draw();
@@ -348,7 +349,7 @@ define([
 				$f.attr({
 					"id":'f_'+i,
 					"title": ''+i
-				})
+				});
 				$f.click(function(e){
 					oScope.stop();
 					oScope.setCurrentFrame.call(oScope, parseInt($(this).attr('id').split('_')[1]));

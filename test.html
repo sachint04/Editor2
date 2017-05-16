@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+		<title>test</title>
+		<meta name="description" content="">
+		<meta name="author" content="SachinT">
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<style type="text/css" media="screen">
+			body {
+				  margin: 0;
+				}
+				#resizable-element {
+				  user-select: none;
+				
+				  background-color: #29e;
+				  color: white;
+				  font-size: 20px;
+				  font-family: sans-serif;
+				  border-radius: 8px;
+				
+				  width: 200px;
+				  height: 200px;
+				
+				  /* This makes things *much* easier */
+				  box-sizing: border-box;
+				}
+				
+				.resize-container {
+				  width: 100%;
+				  height: 240px;
+				}
+				
+				#resize-handle {
+				  position: absolute;
+				  
+				  -webkit-transform: translate(200px, 200px);
+				  transform: translate(200px, 200px);
+				  left: -35px;
+				  top: -35px;
+				  width: 40px;
+				  height: 40px;
+				  
+				  background-color: #92e;
+				  border: solid 4px #fff;
+				  border-radius: 100%;
+				  
+				  curosr: move;
+				}
+		</style>
+	</head>
+
+	<body>
+		<!-- The element that the handle resizes --> 
+		<div id="resizable-element"></div>
+
+		<!-- Resize handle.
+   			  the data-[edge] attributes hold the edges that the handle can resize --> 
+		<div id="resize-handle" data-right="true" data-bottom="true"></div>
+	</body>
+	<script src="https://rawgit.com/taye/interact.js/unstable/dist/interact.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		interact('#resizable-element')
+		  .styleCursor(false)
+		  .resizable({
+		    manualStart: true,
+		    edges: { left: true, right: true, bottom: true, top: true }
+		  })
+		  .on('resizemove', function (event) {
+		  
+		  console.log(event.rect);
+		    var target = event.target,
+		        x = (parseFloat(target.getAttribute('data-x')) || 0),
+		        y = (parseFloat(target.getAttribute('data-y')) || 0);
+		
+		    // update the element's style
+		    target.style.width  = event.rect.width + 'px';
+		    target.style.height = event.rect.height + 'px';
+		
+		    // translate when resizing from top or left edges
+		    x += event.deltaRect.left;
+		    y += event.deltaRect.top;
+		
+		    target.style.webkitTransform = target.style.transform =
+		        'translate(' + x + 'px,' + y + 'px)';
+		
+		    target.setAttribute('data-x', x);
+		    target.setAttribute('data-y', y);
+		  
+		    moveHandler(event, document.getElementById('resize-handle'));
+		  });
+		
+		
+		interact('#resize-handle').on('down', function (event) {
+		  var interaction = event.interaction,
+		      handle = event.currentTarget;
+		
+		  interaction.start({
+		      name: 'resize',
+		      edges: {
+		        top   : handle.dataset.top,
+		        left  : handle.dataset.left,
+		        bottom: handle.dataset.bottom,
+		        right : handle.dataset.right,
+		      }   
+		    },  
+		    interact('#resizable-element'),               // target Interactable
+		    document.getElementById('resizable-element'));   // target Element
+		});
+		
+		
+		  function moveHandler (event, handlerElement) {
+		    var target = handlerElement,
+		        // keep the dragged position in the data-x/data-y attributes
+		        x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+		        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+		
+		    // translate the element
+		    target.style.webkitTransform =
+		    target.style.transform =
+		      'translate(' + event.rect.right + 'px, ' + event.rect.bottom + 'px)';
+		
+		    // update the posiion attributes
+		    target.setAttribute('data-x', x);
+		    target.setAttribute('data-y', y);
+		  }
+	</script>
+</html>

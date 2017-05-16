@@ -19,19 +19,20 @@
 	height:20px;
 }
 
-#resize-handle {
-  position: absolute;
-  
-  -webkit-transform: translate(200px, 200px);
-  transform: translate(200px, 200px);
-  left: -35px;
-  top: -35px;
-  width: 40px;
-  height: 40px;
-  
-  background-color: #92e;
-  border: solid 4px #fff;
-  border-radius: 100%;
-  
-  curosr: move;
+.handle{
+	width:10px;
+	height:10px;
+	border-radius:5px;
+	position:absolute;
+	z-index: 1000;
+	background-color:#2299EE;
+	border:3px solid white;
+}
+.handle.right{
+	right:-10px;
+	top:-10px;
+}
+.handle.bottom{
+	right:-10px;
+	bottom:-10px;
 }

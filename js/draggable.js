@@ -74,9 +74,9 @@ define(
 			   },
 				   edges:{
 				   		right:true,
-				   		bottom:true,
-				   		top:true,
-				   		left:true
+				   		bottom:true,//".handle",
+				   		 top:true,
+				   		 left:true
 				   	}
 				   	
 				}
@@ -85,7 +85,7 @@ define(
 			.on('resizestart', function(event){
 					event.target.setAttribute('data-w', $(event.target).outerWidth());
 					event.target.setAttribute('data-h', $(event.target).outerHeight());
-			})
+			});
 
 		};
 		
@@ -122,10 +122,10 @@ define(
 		    // translate the element
 			//	target.style.webkitTransform =
 		    // target.style.transform =
-		      // 'translate(' + x + 'px, ' + y + 'px)';
+		    // 'translate(' + x + 'px, ' + y + 'px)';
 		
-		target.style.left = x+'px';
-		target.style.top = y+'px';
+			target.style.left = x+'px';
+			target.style.top = y+'px';
 			
 		    // update the posiion attributes
 		    target.setAttribute('data-x', x);

@@ -90,12 +90,16 @@ define([
 		   		{
 				oScope.editor = editor;
 			    editor.on('click', function(e) {
+			    	e.preventDefault();
 				     interact(oScope.$view[0]).draggable(false);
 				     interact(oScope.$view[0]).resizable(false);
+				     oScope.$view.find('.handle').hide();
+				     oScope.$view.css("curspr", "default");
 			    });
 			    editor.on('blur', function(e){
 				     interact(oScope.$view[0]).draggable(true);				    	
 				     interact(oScope.$view[0]).resizable(true);				    	
+				     oScope.$view.find('.handle').show();
 			    });
 			    editor.addMenuItem('style',{
 			    	text: "Style",

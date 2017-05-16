@@ -38,7 +38,8 @@
 		</div>
 		<div  id="stage" class="stage">
 			<div id="sprite1" class="sprite">
-			
+				<!-- <div class="handle right"></div> -->
+				<!-- <div class="handle bottom"></div> -->
 			</div>
 				<!-- <div id="sprite2" class="sprite">
 					<img src="images/Cha_ADD_Male.jpg" height="100%"/>
@@ -47,7 +48,7 @@
 		</div>
 		<canvas id="grid" width="1000" height="500"></canvas>
 		<div class="anim-style"></div>
-		<div id="resize-handle" data-right="true" data-bottom="true"></div>
+		
 		<div id="panels">
 		</div>
 		<div class="css-panel">
@@ -57,8 +58,8 @@
 				<input type="text" name="search" ng-model="curstyle" id="search"/>
 				<div ng-controller="cssObj">
 					<div ng-repeat="x in model.css | filter:curstyle" >
-							<label ng-bind="x.label"></label>
-							<input type="text" ng-change="onChange(x.label, x.value)" ng-model="x.value"></input>
+						<label ng-bind="x.label"></label>
+						<input type="text" ng-change="onChange(x.label, x.value)" ng-model="x.value"></input>
 					</div>
 				</div>
 			</div>
